@@ -6,14 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-public class ProductVariants {
+public class ProductOptions {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,7 +19,4 @@ public class ProductVariants {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
     private String title;
-    private String sku;
-    private Double price;
-    private Long inventoryQuantity;
 }
