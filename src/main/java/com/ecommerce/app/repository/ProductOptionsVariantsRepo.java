@@ -1,4 +1,7 @@
 package com.ecommerce.app.repository;
 
-public interface ProductOptionsVariantsRepo {
+import com.ecommerce.app.model.ProductOptionsVariants;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ProductOptionsVariantsRepo extends JpaRepository<ProductOptionsVariants,Long> {
 }

@@ -14,12 +14,12 @@ import lombok.Setter;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long productId;
+    private Long id;
     private String title;
     private String description;
     private String handle;
     private Boolean status;
     private String type;
     @Column(unique = true)
-    private String productCode;
+    private String code;
 }
