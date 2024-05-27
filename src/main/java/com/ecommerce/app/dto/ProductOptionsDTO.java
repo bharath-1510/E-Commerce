@@ -9,6 +9,6 @@ import lombok.*;
 @ToString
 
 public class ProductOptionsDTO {
-    private Long productId;
-    private String title;
+    private String variantCategory;
+    private String variantValue;
 }

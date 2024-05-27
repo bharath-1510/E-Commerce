@@ -13,10 +13,8 @@ import java.util.Map;
 @ToString
 public class ProductVariantsDTO {
     private Long id;
-    private Long productId;
-    private String title;
     private String sku;
     private Double price;
-    private Long inventoryQuantity;
-    private Map<String,String> options;
+    private Long stockQuantity;
+    private List<ProductOptionsDTO> options;
 }

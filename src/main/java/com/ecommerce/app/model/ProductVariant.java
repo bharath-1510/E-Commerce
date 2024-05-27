@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,8 +20,10 @@ public class ProductVariant {
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
-    private String title;
     private String sku;
     private Double price;
-    private Long inventoryQuantity;
+    private Long stockQuantity;
+    private LocalDateTime createdAt;
+    private LocalDateTime deletedAt;
+    private LocalDateTime updatedAt;
 }

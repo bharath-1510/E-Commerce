@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -17,9 +19,11 @@ public class Product {
     private Long id;
     private String title;
     private String description;
-    private String handle;
     private Boolean status;
     private String type;
     @Column(unique = true)
     private String code;
+    private LocalDateTime createdAt;
+    private LocalDateTime deletedAt;
+    private LocalDateTime updatedAt;
 }
