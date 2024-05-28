@@ -28,7 +28,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/store")
+@RequestMapping("/api")
 public class ProductController {
     @Autowired
     ProductRepo productRepo;
