@@ -1,9 +1,8 @@
 package com.ecommerce.app.controller;
 
-import com.ecommerce.app.dto.AuthenticationResponseDTO;
 import com.ecommerce.app.dto.RegisterRequestDTO;
 import com.ecommerce.app.dto.ResponseDTO;
-import com.ecommerce.app.model.User;
+import com.ecommerce.app.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

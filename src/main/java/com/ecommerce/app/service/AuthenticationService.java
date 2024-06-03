@@ -1,4 +1,4 @@
-package com.ecommerce.app.controller;
+package com.ecommerce.app.service;
 
 
 import com.ecommerce.app.config.JwtService;
