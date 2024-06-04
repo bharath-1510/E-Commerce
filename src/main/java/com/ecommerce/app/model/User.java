@@ -30,9 +30,9 @@ public class User implements UserDetails {
     private Role role;
     @Column(unique = true)
     private String email;
-
+    private String firstName;
+    private String lastName;
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
