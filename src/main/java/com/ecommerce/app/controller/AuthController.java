@@ -18,7 +18,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-public class UserController {
+public class AuthController {
 
     @Autowired
     private AuthenticationService service;
@@ -26,15 +26,16 @@ public class UserController {
     public ResponseEntity<ResponseDTO> register(
             @RequestBody RegisterRequestDTO request
     ) {
-        return ResponseEntity.ok(new ResponseDTO(ResponseDTO.ResponseStatus.SUCCESS,"",service.register(request)));
+        ResponseDTO responseDTO = service.register(request);
+        return ResponseEntity.status(responseDTO.getStatus()).body(responseDTO);
     }
 
     @PostMapping("/refresh")
-    public void refreshToken(
-            HttpServletRequest request,
-            HttpServletResponse response
+    public ResponseEntity<ResponseDTO> refreshToken(
+            HttpServletRequest request
     ) throws IOException {
-        service.refreshToken(request, response);
+        ResponseDTO responseDTO = service.refreshToken(request);
+        return ResponseEntity.status(responseDTO.getStatus()).body(responseDTO);
     }
 
 }

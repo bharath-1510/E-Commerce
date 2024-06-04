@@ -1,16 +1,14 @@
 package com.ecommerce.app.service;
 
 
-import com.ecommerce.app.config.JwtService;
 import com.ecommerce.app.dto.AuthenticationResponseDTO;
 import com.ecommerce.app.dto.RegisterRequestDTO;
-import com.ecommerce.app.handler.ExceptionHandler;
+import com.ecommerce.app.dto.ResponseDTO;
 import com.ecommerce.app.model.Token;
 import com.ecommerce.app.model.TokenType;
 import com.ecommerce.app.model.User;
 import com.ecommerce.app.repository.TokenRepo;
 import com.ecommerce.app.repository.UserRepo;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
@@ -38,20 +36,21 @@ public class AuthenticationService {
     private JwtService jwtService;
 
     @Transactional
-    public AuthenticationResponseDTO register(RegisterRequestDTO request) {
+    public ResponseDTO register(RegisterRequestDTO request) {
         var user = User.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole()).createdAt(LocalDateTime.now())
                 .build();
         var savedUser = repository.save(user);
-            var jwtToken = jwtService.generateToken(user);
-            var refreshToken = jwtService.generateRefreshToken(user);
-            saveUserToken(savedUser, jwtToken);
-            return AuthenticationResponseDTO.builder()
-                    .accessToken(jwtToken)
-                    .refreshToken(refreshToken)
-                    .build();
+        var jwtToken = jwtService.generateToken(user);
+        var refreshToken = jwtService.generateRefreshToken(user);
+        saveUserToken(savedUser, jwtToken);
+        AuthenticationResponseDTO response = AuthenticationResponseDTO.builder()
+                .accessToken(jwtToken)
+                .refreshToken(refreshToken)
+                .build();
+        return new ResponseDTO<>(HttpStatus.CREATED, "", response);
 
     }
 
@@ -69,7 +68,6 @@ public class AuthenticationService {
     }
 
 
-
     @Transactional
     private void revokeAllUserTokens(User user) {
         var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
@@ -82,15 +80,14 @@ public class AuthenticationService {
         tokenRepository.saveAll(validUserTokens);
     }
 
-    public void refreshToken(
-            HttpServletRequest request,
-            HttpServletResponse response
+    public ResponseDTO refreshToken(
+            HttpServletRequest request
     ) throws IOException {
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         String refreshToken;
         final String userEmail;
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            throw new ExceptionHandler(HttpStatus.NOT_FOUND, "No User Exists");
+            return new ResponseDTO<>(HttpStatus.NOT_FOUND, "No User Exists", null);
         }
         refreshToken = authHeader.substring(7);
         userEmail = jwtService.extractUsername(refreshToken);
@@ -106,10 +103,11 @@ public class AuthenticationService {
                         .accessToken(accessToken)
                         .refreshToken(refreshToken)
                         .build();
-                new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
+                return new ResponseDTO<>(HttpStatus.ACCEPTED, "Updated Token", authResponse);
             }
         } else
-            throw new ExceptionHandler(HttpStatus.NOT_FOUND, "No User Exists");
+            return new ResponseDTO<>(HttpStatus.NOT_FOUND, "No User Exists", null);
+        return null;
     }
 
 
