@@ -11,6 +11,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +30,7 @@ public class AuthenticationService {
     @Autowired
     private JwtService jwtService;
 
+    private final AuthenticationManager authenticationManager;
     @Transactional
     public ResponseDTO signin(SiginRequest request) {
         var user = User.builder()
@@ -45,6 +49,7 @@ public class AuthenticationService {
     public ResponseDTO signup(
             SignupRequest request
     ) {
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword()));
         User user = userRepository.findByEmail(request.getEmail()).orElse(null);
         if (user != null) {
             var jwtToken = jwtService.generateToken(user);
