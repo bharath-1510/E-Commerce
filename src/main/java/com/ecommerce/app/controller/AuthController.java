@@ -1,10 +1,9 @@
 package com.ecommerce.app.controller;
 
-import com.ecommerce.app.dto.SiginRequest;
-import com.ecommerce.app.dto.ResponseDTO;
+import com.ecommerce.app.dto.SigninRequest;
 import com.ecommerce.app.dto.SignupRequest;
+import com.ecommerce.app.dto.ResponseDTO;
 import com.ecommerce.app.service.AuthenticationService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,15 +22,15 @@ public class AuthController {
     @Autowired
     private AuthenticationService service;
     @PostMapping("/signin")
-    public ResponseEntity<ResponseDTO> signin(
-            @RequestBody SiginRequest request
+    public ResponseEntity<?> signin(
+            @RequestBody SigninRequest request
     ) {
         ResponseDTO responseDTO = service.signin(request);
         return ResponseEntity.status(responseDTO.getStatus()).body(responseDTO);
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<ResponseDTO> signup(
+    public ResponseEntity<?> signup(
             SignupRequest request
     ) throws IOException {
         ResponseDTO responseDTO = service.signup(request);

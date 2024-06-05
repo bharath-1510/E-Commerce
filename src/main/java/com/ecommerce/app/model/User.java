@@ -26,13 +26,14 @@ public class User implements UserDetails {
     private Long id;
     @Column(name = "password", nullable = false)
     private String password;
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private Role role;
     @Column(unique = true)
     private String email;
     private String firstName;
     private String lastName;
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));

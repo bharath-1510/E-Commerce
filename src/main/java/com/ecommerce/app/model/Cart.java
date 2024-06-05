@@ -14,17 +14,15 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Address {
+public class Cart {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
-    @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
-    private List<String> address;
-    private String city;
-    private String postalCode;
-    private String country;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+    @OneToMany(mappedBy = "cart",cascade = CascadeType.ALL)
+    private List<CartItem> cartItems;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

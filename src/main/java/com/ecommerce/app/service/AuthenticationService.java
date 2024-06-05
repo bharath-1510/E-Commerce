@@ -3,7 +3,7 @@ package com.ecommerce.app.service;
 
 import com.ecommerce.app.dto.AuthenticationResponseDTO;
 import com.ecommerce.app.dto.ResponseDTO;
-import com.ecommerce.app.dto.SiginRequest;
+import com.ecommerce.app.dto.SigninRequest;
 import com.ecommerce.app.dto.SignupRequest;
 import com.ecommerce.app.model.User;
 import com.ecommerce.app.repository.UserRepo;
@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,7 @@ public class AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
     @Transactional
-    public ResponseDTO signin(SiginRequest request) {
+    public ResponseDTO<?> signup(SignupRequest request) {
         var user = User.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
@@ -46,8 +45,8 @@ public class AuthenticationService {
     }
 
 
-    public ResponseDTO signup(
-            SignupRequest request
+    public ResponseDTO<?> signin(
+            SigninRequest request
     ) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword()));
         User user = userRepository.findByEmail(request.getEmail()).orElse(null);

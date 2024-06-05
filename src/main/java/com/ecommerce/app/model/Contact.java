@@ -7,22 +7,24 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Customer {
+public class Contact {
     @Id
     @GeneratedValue
     private Long id;
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-    private String firstName;
-    private String lastName;
     private Long phoneNumber;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private List<String> address;
+    private String city;
+    private String postalCode;
+    private String country;
+  
 }
