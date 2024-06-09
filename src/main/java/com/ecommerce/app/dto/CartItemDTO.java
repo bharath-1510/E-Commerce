@@ -10,4 +10,5 @@ import lombok.*;
 public class CartItemDTO{
     private Long variantId;
     private int quantity;
+
 }
