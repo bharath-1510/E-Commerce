@@ -29,4 +29,18 @@ public class CartController {
         ResponseDTO<?> responseDTO = cartService.createCart(request,cart);
         return ResponseEntity.status(responseDTO.getStatus()).body(responseDTO);
     }
+    @PutMapping("/user/cart")
+    public ResponseEntity<?> updateCart(
+            HttpServletRequest request,@RequestBody CartDTO cart
+    ) {
+        ResponseDTO<?> responseDTO = cartService.updateCart(request,cart);
+        return ResponseEntity.status(responseDTO.getStatus()).body(responseDTO);
+    }
+    @DeleteMapping("/user/cart")
+    public ResponseEntity<?> deleteCart(
+            HttpServletRequest request
+    ) {
+        ResponseDTO<?> responseDTO = cartService.deleteCart(request);
+        return ResponseEntity.status(responseDTO.getStatus()).body(responseDTO);
+    }
 }
