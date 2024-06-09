@@ -13,6 +13,6 @@ import java.util.List;
 
 public class CartDTO {
     private Long id;
-    private List<CartItemDTO> cart;
+    private List<CartItemDTO> cartItems;
 }
 

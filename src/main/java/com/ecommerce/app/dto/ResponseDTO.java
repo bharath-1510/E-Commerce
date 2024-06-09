@@ -15,7 +15,7 @@ import org.springframework.http.HttpStatus;
 public class ResponseDTO<T> {
     @JsonIgnore
     private HttpStatus status;
-    private String error;
+    private String message;
     private T response;
 
 }
