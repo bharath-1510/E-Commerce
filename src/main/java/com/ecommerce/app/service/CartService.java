@@ -82,7 +82,6 @@ public class CartService {
                 ProductVariant variant = variantsRepository.findById(cartRequest.getCartItems().get(i).getVariantId()).orElse(null);
                 if (variant != null) {
                     cartItem.setCart(cart);
-
                     cartItem.setVariant(variant);
                     cartItem.setPrice(variant.getPrice());
                     cartItem.setQuantity(cartRequest.getCartItems().get(i).getQuantity());
@@ -106,8 +105,14 @@ public class CartService {
             if (cart != null) {
                 List<CartItem> cartItems = cartItemRepository.findAllByCart(cart).orElse(null);
                 if (cartItems != null) {
-                    for (CartItem cartItem : cartItems)
+                    for (CartItem cartItem : cartItems) {
+                        ProductVariant variant = variantsRepository.findById(cartItem.getVariant().getId()).orElse(null);
+                        if (variant != null) {
+                            variant.setStockQuantity(variant.getStockQuantity() + cartItem.getQuantity());
+                            variantsRepository.save(variant);
+                        }
                         cartItemRepository.delete(cartItem);
+                    }
                 }
                 cartRepository.delete(cart);
                 return new ResponseDTO<>(HttpStatus.OK, "Deleted Successfully", null);
@@ -132,10 +137,10 @@ public class CartService {
                         variantIds.add(cartItem.getVariant().getId());
                     }
                     List<CartItemDTO> cartItems1 = cartRequest.getCartItems();
-                    for(int i=0;i<cartItems1.size();i++){
-                        if(variantIds.contains(cartItems1.get(i).getVariantId())){
+                    for (int i = 0; i < cartItems1.size(); i++) {
+                        if (variantIds.contains(cartItems1.get(i).getVariantId())) {
                             int finalI = i;
-                            CartItem cartItem = cartItems.stream().filter(x->x.getVariant().getId().equals(cartItems1.get(finalI).getVariantId())).findFirst().get();
+                            CartItem cartItem = cartItems.stream().filter(x -> x.getVariant().getId().equals(cartItems1.get(finalI).getVariantId())).findFirst().get();
                             ProductVariant variant = variantsRepository.findById(cartItems1.get(i).getVariantId()).orElse(null);
                             if (variant != null) {
                                 variant.setStockQuantity(variant.getStockQuantity() + cartItem.getQuantity());
@@ -145,8 +150,7 @@ public class CartService {
                                 cartItemRepository.save(cartItem);
                             } else return new ResponseDTO<>(HttpStatus.NOT_FOUND, "Variant Not Found", null);
 
-                        }
-                        else{
+                        } else {
                             CartItem cartItem = new CartItem();
                             ProductVariant variant = variantsRepository.findById(cartItems1.get(i).getVariantId()).orElse(null);
                             if (variant != null) {

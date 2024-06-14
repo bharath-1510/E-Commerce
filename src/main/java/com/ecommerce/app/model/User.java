@@ -33,6 +33,9 @@ public class User implements UserDetails {
     private String firstName;
     private String lastName;
     private LocalDateTime createdAt;
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Address> addresses;
+
     private LocalDateTime updatedAt;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
