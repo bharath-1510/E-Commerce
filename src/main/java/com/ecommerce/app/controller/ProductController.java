@@ -23,7 +23,7 @@ public class ProductController {
 
     @Autowired
     ProductService productService;
-    @GetMapping("/user/products")
+    @GetMapping("/products")
     public ResponseEntity getAllProducts(
             @RequestParam Optional<Integer> page,@RequestParam Optional<String> sortBy
     ) {

@@ -1,0 +1,11 @@
+{
+  "cart": [
+    {
+      "variantId": 1,
+      "quantity":2
+    },{
+      "variantId": 2,
+      "quantity":4
+    }
+  ]
+}

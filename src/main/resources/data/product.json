@@ -1,0 +1,39 @@
+{
+  "code": "C-001",
+  "title": "T-shirt",
+  "description": "A Colorful T-shirt",
+  "status": true,
+  "type": "clothing",
+  "variants": [
+    {
+      "sku": "RED-S",
+      "price": 500,
+      "stockQuantity": 100,
+      "options": [
+        {
+          "variantCategory": "Color",
+          "variantValue": "Red"
+        },
+        {
+          "variantCategory": "Size",
+          "variantValue": "S"
+        }
+      ]
+    },
+    {
+      "sku": "BLU-M",
+      "price": 750,
+      "stockQuantity": 150,
+      "options": [
+        {
+          "variantCategory": "Color",
+          "variantValue": "Blue"
+        },
+        {
+          "variantCategory": "Size",
+          "variantValue": "M"
+        }
+      ]
+    }
+  ]
+}

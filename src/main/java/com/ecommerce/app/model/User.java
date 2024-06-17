@@ -26,12 +26,16 @@ public class User implements UserDetails {
     private Long id;
     @Column(name = "password", nullable = false)
     private String password;
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private Role role;
     @Column(unique = true)
     private String email;
-
+    private String firstName;
+    private String lastName;
     private LocalDateTime createdAt;
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Address> addresses;
+
     private LocalDateTime updatedAt;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

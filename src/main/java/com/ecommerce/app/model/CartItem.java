@@ -6,26 +6,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class ProductOption {
+public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
+    @JoinColumn(name = "cart_id", nullable = false)
+    private Cart cart;
+    @ManyToOne
     @JoinColumn(name = "variant_id", nullable = false)
     private ProductVariant variant;
-    @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
-    private String value;
-    private String category;
-    private LocalDateTime createdAt;
-    private LocalDateTime deletedAt;
-    private LocalDateTime updatedAt;
+    private Integer quantity;
+    private Double price;
+
 }

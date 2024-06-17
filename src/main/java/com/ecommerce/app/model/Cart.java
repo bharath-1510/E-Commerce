@@ -7,22 +7,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Customer {
+public class Cart {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-    private String firstName;
-    private String lastName;
-    private Long phoneNumber;
+    @OneToMany(mappedBy = "cart",cascade = CascadeType.ALL)
+    private List<CartItem> cartItems;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
