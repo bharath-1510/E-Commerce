@@ -1,0 +1,25 @@
+services:
+  db:
+    ports:
+      - 5432:5432
+    container_name: postgresql_container
+    image: postgres
+    environment:
+      - POSTGRES_DB=ECOMMERCE
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_USER=postgres
+    volumes:
+      - D:\work\postgre-sql:/var/lib/postgresql/data
+    restart: always
+  backend:
+    build: .
+    container_name: app_container
+    ports:
+      - 8089:8089
+    environment:
+      db-url: jdbc:postgresql://db/ECOMMERCE
+      db-username: postgres
+      db-password: 1234
+    depends_on:
+      - db
+    restart: always
