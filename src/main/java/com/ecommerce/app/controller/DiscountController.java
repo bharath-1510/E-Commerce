@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class DiscountController {
     @Autowired
     DiscountService discountService;
-    @GetMapping("/user/discount")
+    @GetMapping("/discount")
     public ResponseEntity<?> getDiscountByCode(
             String code
     ) {
