@@ -3,19 +3,12 @@ package com.ecommerce.app.controller;
 import com.ecommerce.app.dto.ProductDTO;
 
 import com.ecommerce.app.dto.ResponseDTO;
-import com.ecommerce.app.model.Product;
-import com.ecommerce.app.model.ProductOption;
-import com.ecommerce.app.model.ProductVariant;
 import com.ecommerce.app.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
-
-import static com.ecommerce.app.converter.ProductConverter.*;
 
 @RestController
 @RequestMapping("/api")

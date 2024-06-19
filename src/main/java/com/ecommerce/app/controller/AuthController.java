@@ -31,7 +31,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(
-            SignupRequest request
+            @RequestBody SignupRequest request
     ) throws IOException {
         ResponseDTO responseDTO = service.signup(request);
         return ResponseEntity.status(responseDTO.getStatus()).body(responseDTO);

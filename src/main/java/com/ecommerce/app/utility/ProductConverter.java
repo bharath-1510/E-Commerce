@@ -1,4 +1,4 @@
-package com.ecommerce.app.converter;
+package com.ecommerce.app.utility;
 
 import com.ecommerce.app.dto.ProductDTO;
 import com.ecommerce.app.dto.ProductOptionsDTO;

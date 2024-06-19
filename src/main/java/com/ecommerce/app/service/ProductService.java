@@ -14,7 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,8 +21,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.ecommerce.app.converter.ProductConverter.convertDTOtoModel;
-import static com.ecommerce.app.converter.ProductConverter.convertModelToDTO;
+import static com.ecommerce.app.utility.ProductConverter.convertDTOtoModel;
+import static com.ecommerce.app.utility.ProductConverter.convertModelToDTO;
 
 @Service
 public class ProductService {
