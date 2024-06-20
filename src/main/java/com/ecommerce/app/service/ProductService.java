@@ -9,7 +9,6 @@ import com.ecommerce.app.repository.ProductOptionsRepo;
 import com.ecommerce.app.repository.ProductRepo;
 import com.ecommerce.app.repository.ProductVariantsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -35,38 +34,46 @@ public class ProductService {
     @Autowired
     ProductOptionsRepo productOptionsRepo;
 
-    public ResponseDTO getProducts(Optional<Integer> page, Optional<String> sortBy) {
-        if (page.isEmpty()) {
-            List<Product> products = productRepo.findAll();
-            List<ProductDTO> responseDTO = new LinkedList<>();
-            products.forEach(
-                    x -> responseDTO.add(convertModelToDTO(x, productVariantsRepo.findAllByProduct(x), productOptionsRepo.findAllByProduct(x)))
-            );
-            return new ResponseDTO<>(HttpStatus.ACCEPTED, "", responseDTO);
-        }
-        else{
-            Page<Product> productPage = productRepo.findAll(
-                    PageRequest.of(page.get(),3, Sort.by(Sort.Direction.ASC, sortBy.orElse("id")))
-            ) ;
-            List<ProductDTO> responseDTO = new LinkedList<>();
-            productPage.forEach(
-                    x -> responseDTO.add(convertModelToDTO(x, productVariantsRepo.findAllByProduct(x), productOptionsRepo.findAllByProduct(x)))
-            );
-            return new ResponseDTO<>(HttpStatus.OK, "", responseDTO);
+    public ResponseDTO<?> getProducts(Optional<Integer> page, Optional<String> sortBy) {
+        try {
+            if (page.isEmpty() && sortBy.isEmpty()) {
+                List<Product> products = productRepo.findAll();
+                List<ProductDTO> responseDTO = new LinkedList<>();
+                products.forEach(
+                        x -> responseDTO.add(convertModelToDTO(x, productVariantsRepo.findAllByProduct(x), productOptionsRepo.findAllByProduct(x)))
+                );
+                return new ResponseDTO<>(HttpStatus.OK, "Products are fetched", responseDTO);
+            } else {
+                Page<Product> productPage = productRepo.findAll(
+                        PageRequest.of(page.orElse(0), 10, Sort.by(Sort.Direction.ASC, sortBy.orElse("id")))
+                );
+                List<ProductDTO> responseDTO = new LinkedList<>();
+                productPage.forEach(
+                        x -> responseDTO.add(convertModelToDTO(x, productVariantsRepo.findAllByProduct(x), productOptionsRepo.findAllByProduct(x)))
+                );
+                return new ResponseDTO<>(HttpStatus.OK, "Products are fetched", responseDTO);
+            }
+        } catch (Exception e) {
+            return new ResponseDTO<>(HttpStatus.BAD_REQUEST, e.getMessage(), null);
         }
     }
 
-    public ResponseDTO getProduct(String code) {
-        Product product = productRepo.findByCode(code);
-        if (product != null) {
-            List<ProductVariant> productVariants = productVariantsRepo.findAllByProduct(product);
-            List<ProductOption> productOptions = productOptionsRepo.findAllByProduct(product);
-            return new ResponseDTO(HttpStatus.OK, "", convertModelToDTO(product, productVariants, productOptions));
-        } else
-            return new ResponseDTO(HttpStatus.NOT_FOUND, "Not Found", null);
+    public ResponseDTO<?> getProduct(String code) {
+        try {
+            Product product = productRepo.findByCode(code);
+            if (product != null) {
+                List<ProductVariant> productVariants = productVariantsRepo.findAllByProduct(product);
+                List<ProductOption> productOptions = productOptionsRepo.findAllByProduct(product);
+                return new ResponseDTO<>(HttpStatus.OK, "Product Fetched", convertModelToDTO(product, productVariants, productOptions));
+            } else
+                return new ResponseDTO<>(HttpStatus.NOT_FOUND, "Not Found", null);
+        } catch (Exception ex) {
+            return new ResponseDTO<>(HttpStatus.BAD_REQUEST, ex.getMessage(), null);
+
+        }
     }
 
-    public ResponseDTO createProduct(ProductDTO productDTO) {
+    public ResponseDTO<?> createProduct(ProductDTO productDTO) {
         try {
             Product product = productRepo.save(convertDTOtoModel(productDTO));
             productDTO.setId(product.getId());
@@ -87,10 +94,9 @@ public class ProductService {
                 }
             }
 
-            return new ResponseDTO<>(HttpStatus.CREATED, "", productDTO);
-        } catch (DataIntegrityViolationException ex) {
-
-            return new ResponseDTO<>(HttpStatus.CONFLICT, "Duplicate Entry", null);
+            return new ResponseDTO<>(HttpStatus.CREATED, "Product Created", productDTO);
+        } catch (Exception ex) {
+            return new ResponseDTO<>(HttpStatus.BAD_REQUEST, ex.getMessage(), null);
         }
     }
 }

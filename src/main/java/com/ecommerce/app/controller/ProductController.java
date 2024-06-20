@@ -20,13 +20,13 @@ public class ProductController {
     public ResponseEntity getAllProducts(
             @RequestParam Optional<Integer> page,@RequestParam Optional<String> sortBy
     ) {
-        ResponseDTO responseDTO = productService.getProducts(page,sortBy);
+        ResponseDTO<?> responseDTO = productService.getProducts(page,sortBy);
        return ResponseEntity.status(responseDTO.getStatus()).body(responseDTO);
     }
 
     @GetMapping("/product")
     public ResponseEntity<ResponseDTO> getProduct(@RequestParam String code) {
-        ResponseDTO responseDTO = productService.getProduct(code);
+        ResponseDTO<?> responseDTO = productService.getProduct(code);
         return ResponseEntity.status(responseDTO.getStatus()).body(responseDTO);
     }
 
@@ -34,7 +34,7 @@ public class ProductController {
 
     @PostMapping("/admin/products")
     public ResponseEntity<ResponseDTO> createProduct(@RequestBody ProductDTO productDTO) {
-        ResponseDTO responseDTO = productService.createProduct(productDTO);
+        ResponseDTO<?> responseDTO = productService.createProduct(productDTO);
         return ResponseEntity.status(responseDTO.getStatus()).body(responseDTO);
     }
 
