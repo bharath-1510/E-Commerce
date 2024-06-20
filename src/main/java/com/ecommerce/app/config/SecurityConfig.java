@@ -1,7 +1,10 @@
 package com.ecommerce.app.config;
 
 import com.ecommerce.app.dto.Role;
+import com.ecommerce.app.handler.CustomAccessDeniedHandler;
+import com.ecommerce.app.handler.CustomAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -20,8 +23,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
-    private static final String[] WHITE_LIST_URL = { "/api/auth/**", "/api-docs/**", "/swagger-resources", "/swagger-resources/**", "/configuration/ui",
+    private static final String[] WHITE_LIST_URL = {"/api/auth/**", "/api-docs/**", "/swagger-resources", "/swagger-resources/**", "/configuration/ui",
             "/configuration/security", "/swagger-ui/**", "/webjars/**", "/swagger-ui.html"};
+
+    @Autowired
+
+    CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+    @Autowired
+    CustomAccessDeniedHandler accessDeniedHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -36,7 +45,12 @@ public class SecurityConfig {
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(customAuthenticationEntryPoint)
+                        .accessDeniedHandler(accessDeniedHandler)
+
+                )
+        ;
         return http.build();
     }
 }

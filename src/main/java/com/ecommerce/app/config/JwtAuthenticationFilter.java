@@ -41,9 +41,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String userEmail;
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
-            response.setStatus(401);
-            response.setContentType("application/json");
-            response.getWriter().write(objectMapper.writeValueAsString(new ResponseDTO<>(HttpStatus.UNAUTHORIZED,"Token Not Found",null)));
             return;
         }
         jwt = authHeader.substring(7);
@@ -72,7 +69,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             response.setStatus(401);
             response.setContentType("application/json");
             response.getWriter().write(objectMapper.writeValueAsString(new ResponseDTO<>(HttpStatus.UNAUTHORIZED,"Token Expired",null)));
-            return;
         }
     }
 
