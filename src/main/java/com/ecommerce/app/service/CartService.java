@@ -52,11 +52,9 @@ public class CartService {
                     cartItemDTO.setVariantId(cartItem.getId());
                     singleCart.getCartItems().add(cartItemDTO);
                 }
-                return new ResponseDTO<>(HttpStatus.OK, "", singleCart);
+                return new ResponseDTO<>(HttpStatus.OK, "Cart Found", singleCart);
             } else
-                return new ResponseDTO<>(HttpStatus.NO_CONTENT, "No Cart Found", null);
-
-
+                return new ResponseDTO<>(HttpStatus.NOT_FOUND, "No Cart Found", null);
         } else return new ResponseDTO<>(HttpStatus.NOT_FOUND, "User Not Found", null);
 
     }
@@ -70,7 +68,7 @@ public class CartService {
         if (user != (null)) {
             Cart cart = cartRepository.findByUser(user).orElse(null);
             if (cart != null) {
-                return new ResponseDTO<>(HttpStatus.NOT_ACCEPTABLE, "Cart Already Created", null);
+                return new ResponseDTO<>(HttpStatus.CONFLICT, "Cart Already Created", null);
             }
             cart = new Cart();
             cart.setCreatedAt(LocalDateTime.now());
@@ -117,7 +115,7 @@ public class CartService {
                 cartRepository.delete(cart);
                 return new ResponseDTO<>(HttpStatus.OK, "Deleted Successfully", null);
             } else
-                return new ResponseDTO<>(HttpStatus.NOT_MODIFIED, "No Cart Found", null);
+                return new ResponseDTO<>(HttpStatus.NOT_FOUND, "No Cart Found", null);
         } else
             return new ResponseDTO<>(HttpStatus.NOT_FOUND, "User Not Found", null);
     }
