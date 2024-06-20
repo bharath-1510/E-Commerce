@@ -1,3 +1,5 @@
+
+
 Constraints for a Valid Password:
 <br>It must contain at least 8 characters and at most 20 characters.
 <br>It must have at least one digit.
@@ -5,3 +7,8 @@ Constraints for a Valid Password:
 <br>It must have at least one lowercase alphabet.
 <br>It must have at least one special character (such as !@#$%&*()-+=^).
 <br>It should not contain any white spaces.
+
+Change the JDBC if you use posygres
+
+![img.png](img.png)
+![img_1.png](img_1.png)

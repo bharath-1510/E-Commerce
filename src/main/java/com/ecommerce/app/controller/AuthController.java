@@ -27,7 +27,7 @@ public class AuthController {
     public ResponseEntity<?> signin(
             @RequestBody SigninRequest request
     ) {
-        ResponseDTO responseDTO = service.signin(request);
+        ResponseDTO<?> responseDTO = service.signin(request);
         return ResponseEntity.status(responseDTO.getStatus()).body(responseDTO);
     }
 
@@ -35,7 +35,7 @@ public class AuthController {
     public ResponseEntity<?> signup(
             @RequestBody SignupRequest request
     ) throws IOException {
-        ResponseDTO responseDTO = service.signup(request);
+        ResponseDTO<?> responseDTO = service.signup(request);
         return ResponseEntity.status(responseDTO.getStatus()).body(responseDTO);
     }
 
@@ -44,7 +44,7 @@ public class AuthController {
             HttpServletRequest request
 
     ) {
-        ResponseDTO responseDTO = service.refresh(request);
+        ResponseDTO<?> responseDTO = service.refresh(request);
         return ResponseEntity.status(responseDTO.getStatus()).body(responseDTO);
     }
 
