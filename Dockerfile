@@ -1,4 +1,4 @@
-FROM azulu/zulu-openjdk:17
+FROM azul/zulu-openjdk:17
 COPY target/*.jar app.jar
 EXPOSE 8089
 ENTRYPOINT ["java","-jar","app.jar"]
