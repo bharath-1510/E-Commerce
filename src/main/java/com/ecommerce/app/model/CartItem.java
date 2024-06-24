@@ -13,7 +13,7 @@ import lombok.Setter;
 @Entity
 public class CartItem {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @ManyToOne
     @JoinColumn(name = "cart_id", nullable = false)

@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 public class Discount {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @Column(unique = true,nullable = false)
     private  String code;
