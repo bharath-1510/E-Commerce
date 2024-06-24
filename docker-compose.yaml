@@ -1,0 +1,25 @@
+services:
+  db:
+    ports:
+      - 3306:3306
+    container_name: mysql_container
+    image: mysql
+    environment:
+      - MYSQL_DATABASE=ECOMMERCE
+      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_USER=root
+    volumes:
+      - D:\work\my-sql:/var/lib/mysql
+    restart: always
+  backend:
+    build: .
+    container_name: app_container
+    ports:
+      - 8089:8089
+    environment:
+      db-url: jdbc:mysql://db/ECOMMERCE
+      db-username: root
+      db-password: 1234
+    depends_on:
+      - db
+    restart: always

@@ -1,101 +1,110 @@
--- Create users table
+
 CREATE TABLE users (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR(255) NOT NULL,
-    last_name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
+    id BIGINT NOT NULL AUTO_INCREMENT,
     password VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP,
-    role VARCHAR(50) NOT NULL,
-    CONSTRAINT chk_role CHECK (role IN ('USER', 'ADMIN'))
+    role ENUM('ADMIN','USER') NOT NULL,
+    email VARCHAR(255) UNIQUE,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    created_at DATETIME,
+    updated_at DATETIME,
+    PRIMARY KEY (id)
 );
 
--- Create addresses table
 CREATE TABLE address (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id BIGINT REFERENCES users(id) ON DELETE CASCADE,
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
     street VARCHAR(255),
-    city VARCHAR(100),
-    phone_number VARCHAR(20),
-    postal_code VARCHAR(20),
-    country VARCHAR(100)
+    phone_number VARCHAR(255),
+    city VARCHAR(255),
+    postal_code VARCHAR(255),
+    country VARCHAR(255),
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
-
-
--- Create Token Table
 
 CREATE TABLE token (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    token VARCHAR(255) UNIQUE NOT NULL,
-    revoked BOOLEAN,
-    expired BOOLEAN,
-    user_id BIGINT REFERENCES users(id) ON DELETE CASCADE
+    id INT NOT NULL AUTO_INCREMENT,
+    token VARCHAR(255) UNIQUE,
+    revoked TINYINT(1) DEFAULT 0,
+    expired TINYINT(1) DEFAULT 0,
+    user_id BIGINT,
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
--- Create Product table
-CREATE TABLE product (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
+
+
+CREATE TABLE Product (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    title VARCHAR(255),
     description TEXT,
     status BOOLEAN,
-    type VARCHAR(50),
+    type VARCHAR(255),
     code VARCHAR(255) UNIQUE,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP
+    created_at DATETIME,
+    updated_at DATETIME,
+    PRIMARY KEY (id)
 );
-
--- Create ProductVariant table
-CREATE TABLE product_variant (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    product_id BIGINT REFERENCES product(id) ON DELETE CASCADE,
-    sku VARCHAR(50),
-    price DOUBLE PRECISION,
+CREATE TABLE Product_Variant (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    product_id BIGINT NOT NULL,
+    sku VARCHAR(255),
+    price DOUBLE,
     stock_quantity BIGINT,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP
+    created_at DATETIME,
+    updated_at DATETIME,
+    PRIMARY KEY (id),
+    FOREIGN KEY (product_id) REFERENCES Product(id)
 );
 
--- Create ProductOption table
-CREATE TABLE product_option (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    variant_id BIGINT REFERENCES product_variant(id) ON DELETE CASCADE,
-    product_id BIGINT REFERENCES product(id) ON DELETE CASCADE,
+CREATE TABLE Product_Option (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    variant_id BIGINT NOT NULL,
+    product_id BIGINT NOT NULL,
     value VARCHAR(255),
-    category VARCHAR(100),
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP
+    category VARCHAR(255),
+    created_at DATETIME,
+    updated_at DATETIME,
+    PRIMARY KEY (id),
+    FOREIGN KEY (variant_id) REFERENCES Product_Variant(id),
+    FOREIGN KEY (product_id) REFERENCES Product(id)
 );
 
 
 
--- Create Discount table
-CREATE TABLE discount (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE Discount (
+    id BIGINT NOT NULL AUTO_INCREMENT,
     code VARCHAR(255) UNIQUE NOT NULL,
     description TEXT,
-    discount_type VARCHAR(50) NOT NULL,
-    value DOUBLE PRECISION NOT NULL,
-    usage_limit INTEGER,
-    expires_at TIMESTAMP NOT NULL,
-    created_at TIMESTAMP NOT NULL,
-    updated_at TIMESTAMP,
-    CONSTRAINT chk_discount_type CHECK (discount_type IN ('FREE_SHIPPING','PERCENTAGE','FIXED_AMOUNT')) -- Enum constraint
+    discount_type ENUM('FREE_SHIPPING','PERCENTAGE','FIXED_AMOUNT'),
+    value DOUBLE NOT NULL,
+    usage_limit INT,
+    expires_at DATETIME NOT NULL,
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME,
+    PRIMARY KEY (id)
 );
 
--- Create Cart table
-CREATE TABLE cart (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id BIGINT REFERENCES users(id) ON DELETE CASCADE,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP
+
+
+CREATE TABLE Cart (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
+    created_at DATETIME,
+    updated_at DATETIME,
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES Users(id)
 );
 
--- Create CartItem table
-CREATE TABLE cart_item (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    cart_id BIGINT REFERENCES cart(id) ON DELETE CASCADE,
-    variant_id BIGINT REFERENCES product_variant(id) ON DELETE CASCADE,
-    quantity INTEGER,
-    price DOUBLE PRECISION
+CREATE TABLE Cart_Item (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    cart_id BIGINT NOT NULL,
+    variant_id BIGINT NOT NULL,
+    quantity INT,
+    price DOUBLE,
+    PRIMARY KEY (id),
+    FOREIGN KEY (cart_id) REFERENCES Cart(id),
+    FOREIGN KEY (variant_id) REFERENCES Product_Variant(id)
 );
+

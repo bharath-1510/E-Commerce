@@ -14,7 +14,6 @@ import lombok.Setter;
 
 public class Address {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

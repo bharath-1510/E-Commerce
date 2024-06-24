@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 public class Token {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     public Integer id;
 
     @Column(unique = true)

@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @Entity
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String title;
     private String description;
