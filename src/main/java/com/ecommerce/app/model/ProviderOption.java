@@ -12,16 +12,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 
-public class Address {
+public class ProviderOption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String option;
+    private String value;
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-    private String street;
-    private String phoneNumber;
-    private String city;
-    private String postalCode;
-    private String country;
+    @JoinColumn(name = "provider_id")
+    private FulfillmentProvider fulfillmentProvider;
 }

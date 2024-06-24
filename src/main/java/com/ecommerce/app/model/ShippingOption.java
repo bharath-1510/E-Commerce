@@ -7,22 +7,26 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Cart {
+public class ShippingOption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-    @OneToMany(mappedBy = "cart",cascade = CascadeType.ALL)
-    private List<CartItem> cartItems;
+    private String name;
+    private Double amount;
+    private Boolean isReturn;
+
+    @ManyToOne
+    @JoinColumn(name = "provider_id")
+    private FulfillmentProvider fulfillmentProvider;
+    @ManyToOne
+    @JoinColumn(name = "region_id")
+    private Region region;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

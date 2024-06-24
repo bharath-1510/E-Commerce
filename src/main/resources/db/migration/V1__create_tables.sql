@@ -78,7 +78,7 @@ CREATE TABLE Discount (
     code VARCHAR(255) UNIQUE NOT NULL,
     description TEXT,
     discount_type ENUM('FREE_SHIPPING','PERCENTAGE','FIXED_AMOUNT'),
-    value DOUBLE NOT NULL,
+    value DOUBLE DEFAULT 0,
     usage_limit INT,
     expires_at DATETIME NOT NULL,
     created_at DATETIME NOT NULL,

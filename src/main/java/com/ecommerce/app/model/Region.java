@@ -14,15 +14,16 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Cart {
+public class Region {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-    @OneToMany(mappedBy = "cart",cascade = CascadeType.ALL)
-    private List<CartItem> cartItems;
+    private String name;
+    @Column(nullable = false)
+    private String currencyCode;
+    private Double taxRate;
+    @OneToMany(mappedBy = "region")
+    private List<ShippingOption> shippingOptions;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

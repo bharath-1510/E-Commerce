@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Entity
 public class ProductOption {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     @JoinColumn(name = "variant_id", nullable = false)
