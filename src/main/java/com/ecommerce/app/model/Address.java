@@ -19,7 +19,8 @@ public class Address {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-    private Long phoneNumber;
+    private String street;
+    private String phoneNumber;
     private String city;
     private String postalCode;
     private String country;

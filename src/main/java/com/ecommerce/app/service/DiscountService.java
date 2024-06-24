@@ -49,6 +49,7 @@ public class DiscountService {
             discount.setDescription(dto.getDescription());
             discount.setExpiresAt(LocalDateTime.now().plusDays(45));
             discount.setUsageLimit(dto.getUsageLimit());
+            discount.setCreatedAt(LocalDateTime.now());
             discount = discountRepository.save(discount);
             dto.setId(discount.getId());
             return new ResponseDTO<>(HttpStatus.CREATED, "Discount Created", dto);

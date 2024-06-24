@@ -25,13 +25,10 @@ public class Discount {
     private Double value;
     @Column
     private Integer usageLimit;
+    @Column(nullable = false)
     private LocalDateTime expiresAt;
     @Column(nullable = false)
-    private  LocalDateTime createdAt=LocalDateTime.now();
-    @Column(nullable = false)
-    private  LocalDateTime updatedAt=LocalDateTime.now();
-    @PreUpdate
-    protected void onUpdate(){
-        updatedAt = LocalDateTime.now();
-    }
+    private  LocalDateTime createdAt;
+    private  LocalDateTime updatedAt;
+
 }

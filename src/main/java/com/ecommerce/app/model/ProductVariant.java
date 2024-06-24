@@ -24,6 +24,5 @@ public class ProductVariant {
     private Double price;
     private Long stockQuantity;
     private LocalDateTime createdAt;
-    private LocalDateTime deletedAt;
     private LocalDateTime updatedAt;
 }

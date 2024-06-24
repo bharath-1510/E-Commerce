@@ -26,6 +26,5 @@ public class ProductOption {
     private String value;
     private String category;
     private LocalDateTime createdAt;
-    private LocalDateTime deletedAt;
     private LocalDateTime updatedAt;
 }

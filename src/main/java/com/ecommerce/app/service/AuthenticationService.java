@@ -8,7 +8,6 @@ import com.ecommerce.app.repository.TokenRepository;
 import com.ecommerce.app.repository.UserRepo;
 import com.ecommerce.app.utility.UtilityService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

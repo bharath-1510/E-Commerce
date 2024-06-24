@@ -24,6 +24,5 @@ public class Product {
     @Column(unique = true)
     private String code;
     private LocalDateTime createdAt;
-    private LocalDateTime deletedAt;
     private LocalDateTime updatedAt;
 }
