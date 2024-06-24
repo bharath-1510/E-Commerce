@@ -21,7 +21,7 @@ SpringBoot Application:
     <li> Jarfile will be created.
 </ul>
 
-![img.png](src/main/resources/image/img.png)
+![img.png](src/main/resources/image/Maven.png)
 <ul>
 <li>Open the Terminal in the root level of the project</li>
 <li>docker compose -f .\docker-compose.yaml up</li>
@@ -30,4 +30,4 @@ SpringBoot Application:
 <li>After the postgresql image created , start the backend image</li>
 
 
-![img.png](src/main/resources/image/img.png)
+![img.png](src/main/resources/image/Maven_1.png)
