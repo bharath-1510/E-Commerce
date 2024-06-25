@@ -14,14 +14,16 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class FulfillmentProvider {
+public class Provider {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @OneToMany(mappedBy = "fulfillmentProvider")
+    @Column(unique = true)
+    private String code;
+    @OneToMany(mappedBy = "provider")
     private List<ShippingOption> shippingOptions;
-    @OneToMany(mappedBy = "fulfillmentProvider")
+    @OneToMany(mappedBy = "provider")
     private List<ProviderOption> providerOptions;
 
     private LocalDateTime createdAt;

@@ -28,6 +28,7 @@ public class AuthController {
             @RequestBody SigninRequest request
     ) {
         ResponseDTO<?> responseDTO = service.signin(request);
+
         return ResponseEntity.status(responseDTO.getStatus()).body(responseDTO);
     }
 

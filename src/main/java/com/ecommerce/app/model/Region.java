@@ -24,6 +24,8 @@ public class Region {
     private Double taxRate;
     @OneToMany(mappedBy = "region")
     private List<ShippingOption> shippingOptions;
+    @Column(unique = true)
+    private String code;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

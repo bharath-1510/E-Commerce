@@ -1,7 +1,7 @@
 package com.ecommerce.app.config;
 
 import com.ecommerce.app.dto.ResponseDTO;
-import com.ecommerce.app.repository.TokenRepository;
+import com.ecommerce.app.repository.TokenRepo;
 import com.ecommerce.app.service.JwtService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -31,7 +31,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
-    private TokenRepository tokenRepository;
+    private TokenRepo tokenRepository;
 
     @Override
     protected void doFilterInternal(

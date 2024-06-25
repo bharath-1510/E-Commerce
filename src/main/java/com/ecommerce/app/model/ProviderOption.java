@@ -20,5 +20,5 @@ public class ProviderOption {
     private String value;
     @ManyToOne
     @JoinColumn(name = "provider_id")
-    private FulfillmentProvider fulfillmentProvider;
+    private Provider provider;
 }
