@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,13 +21,14 @@ public class ShippingOption {
     private String name;
     private Double amount;
     private Boolean isReturn;
-
     @ManyToOne
     @JoinColumn(name = "provider_id")
     private Provider provider;
     @ManyToOne
     @JoinColumn(name = "region_id")
     private Region region;
+    @OneToMany(mappedBy = "shippingOption")
+    private List<ShippingDetail> shippingDetails;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
