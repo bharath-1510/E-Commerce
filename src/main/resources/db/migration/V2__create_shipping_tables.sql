@@ -1,5 +1,5 @@
 
-CREATE TABLE provider (
+CREATE TABLE IF NOT EXISTS provider (
     id BIGINT NOT NULL AUTO_INCREMENT,
     name VARCHAR(100),
     code VARCHAR(100),
@@ -8,7 +8,7 @@ CREATE TABLE provider (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE provider_option (
+CREATE TABLE IF NOT EXISTS provider_option (
     id BIGINT NOT NULL AUTO_INCREMENT,
     provider_id BIGINT NOT NULL,
     `option` VARCHAR(255),
@@ -17,7 +17,7 @@ CREATE TABLE provider_option (
     FOREIGN KEY (provider_id) REFERENCES provider(id)
 );
 
-CREATE TABLE region (
+CREATE TABLE IF NOT EXISTS region (
     id BIGINT NOT NULL AUTO_INCREMENT,
     name VARCHAR(100),
     code VARCHAR(100),
@@ -29,7 +29,7 @@ CREATE TABLE region (
 );
 
 
-CREATE TABLE shipping_option (
+CREATE TABLE IF NOT EXISTS shipping_option (
     id BIGINT NOT NULL AUTO_INCREMENT,
     name VARCHAR(100),
     code VARCHAR(100),

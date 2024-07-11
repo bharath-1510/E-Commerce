@@ -1,5 +1,5 @@
 
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id BIGINT NOT NULL AUTO_INCREMENT,
     password VARCHAR(255) NOT NULL,
     role ENUM('ADMIN','USER') NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE users (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE address (
+CREATE TABLE IF NOT EXISTS address (
     id BIGINT NOT NULL AUTO_INCREMENT,
     user_id BIGINT NOT NULL,
     street VARCHAR(255),
@@ -23,7 +23,7 @@ CREATE TABLE address (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-CREATE TABLE token (
+CREATE TABLE IF NOT EXISTS token (
     id INT NOT NULL AUTO_INCREMENT,
     token VARCHAR(255) UNIQUE,
     revoked TINYINT(1) DEFAULT 0,
@@ -35,7 +35,7 @@ CREATE TABLE token (
 
 
 
-CREATE TABLE Product (
+CREATE TABLE IF NOT EXISTS Product (
     id BIGINT NOT NULL AUTO_INCREMENT,
     title VARCHAR(255),
     description TEXT,
@@ -46,7 +46,7 @@ CREATE TABLE Product (
     updated_at DATETIME,
     PRIMARY KEY (id)
 );
-CREATE TABLE Product_Variant (
+CREATE TABLE IF NOT EXISTS Product_Variant (
     id BIGINT NOT NULL AUTO_INCREMENT,
     product_id BIGINT NOT NULL,
     sku VARCHAR(255),
@@ -58,7 +58,7 @@ CREATE TABLE Product_Variant (
     FOREIGN KEY (product_id) REFERENCES Product(id)
 );
 
-CREATE TABLE Product_Option (
+CREATE TABLE IF NOT EXISTS Product_Option (
     id BIGINT NOT NULL AUTO_INCREMENT,
     variant_id BIGINT NOT NULL,
     product_id BIGINT NOT NULL,
@@ -73,7 +73,7 @@ CREATE TABLE Product_Option (
 
 
 
-CREATE TABLE Discount (
+CREATE TABLE IF NOT EXISTS Discount (
     id BIGINT NOT NULL AUTO_INCREMENT,
     code VARCHAR(255) UNIQUE NOT NULL,
     description TEXT,
@@ -88,7 +88,7 @@ CREATE TABLE Discount (
 
 
 
-CREATE TABLE Cart (
+CREATE TABLE IF NOT EXISTS Cart (
     id BIGINT NOT NULL AUTO_INCREMENT,
     user_id BIGINT NOT NULL,
     created_at DATETIME,
@@ -97,7 +97,7 @@ CREATE TABLE Cart (
     FOREIGN KEY (user_id) REFERENCES Users(id)
 );
 
-CREATE TABLE Cart_Item (
+CREATE TABLE IF NOT EXISTS Cart_Item (
     id BIGINT NOT NULL AUTO_INCREMENT,
     cart_id BIGINT NOT NULL,
     variant_id BIGINT NOT NULL,

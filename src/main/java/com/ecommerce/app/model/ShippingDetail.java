@@ -12,15 +12,13 @@ import org.hibernate.dialect.BooleanDecoder;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "shipping")
 public class ShippingDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
-    @JoinColumn(name = "order_id", nullable = false)
-    private Order order;
     private Boolean deliveryStatus=false;
     @ManyToOne
-    @JoinColumn(name = "shippingOption_id")
+    @JoinColumn(name = "shipping_option_id")
     private ShippingOption shippingOption;
 }
