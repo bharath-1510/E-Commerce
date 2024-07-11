@@ -53,7 +53,7 @@ public class AuthenticationService {
                                 .build();
                         user = userRepository.save(user);
                         request.setId(user.getId());
-                        return new ResponseDTO<>(HttpStatus.CREATED, "Account Created", request);
+                        return new ResponseDTO<>(HttpStatus.CREATED, "Account Created", null);
                     } else
                         return new ResponseDTO<>(HttpStatus.NOT_ACCEPTABLE, "Password doesn't match the format", null);
                 } else

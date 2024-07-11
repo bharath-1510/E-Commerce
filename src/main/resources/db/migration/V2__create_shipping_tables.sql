@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS provider (
 CREATE TABLE IF NOT EXISTS provider_option (
     id BIGINT NOT NULL AUTO_INCREMENT,
     provider_id BIGINT NOT NULL,
-    `option` VARCHAR(255),
+    category VARCHAR(255),
     value VARCHAR(255),
     PRIMARY KEY (id),
     FOREIGN KEY (provider_id) REFERENCES provider(id)

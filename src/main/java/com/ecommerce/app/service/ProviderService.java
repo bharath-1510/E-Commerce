@@ -19,7 +19,8 @@ import java.util.Optional;
 @Service
 public class ProviderService {
     @Autowired
-    ProviderRepo providerRepo;
+    private ProviderRepo providerRepo;
+    @Autowired
     private ProviderOptionRepo providerOptionRepo;
 
 
@@ -30,6 +31,7 @@ public class ProviderService {
                 return new ResponseDTO<>(HttpStatus.NOT_FOUND, "Provider Not Found", null);
             Provider providerFound = provider.get();
             ProviderDTO providerDTO = new ProviderDTO();
+            providerDTO.setId(providerFound.getId());
             providerDTO.setName(providerFound.getName());
             providerDTO.setCode(providerFound.getCode());
             List<ProviderOptionDTO> providerOptionDTOS = getProviderOptionDTOS(providerFound);
@@ -47,7 +49,7 @@ public class ProviderService {
                 providerOption ->
                 {
                     ProviderOptionDTO dto = new ProviderOptionDTO();
-                    dto.setOption(providerOption.getOption());
+                    dto.setCategory(providerOption.getCategory());
                     dto.setValue(providerOption.getValue());
                     providerOptionDTOS.add(dto);
                 }
@@ -63,6 +65,7 @@ public class ProviderService {
                 providers.forEach(
                         provider -> {
                             ProviderDTO providerDTO = new ProviderDTO();
+                            providerDTO.setId(provider.getId());
                             providerDTO.setName(provider.getName());
                             providerDTO.setCode(provider.getCode());
                             List<ProviderOptionDTO> providerOptionDTOS = getProviderOptionDTOS(provider);
@@ -88,16 +91,13 @@ public class ProviderService {
             providerFound.setName(provider.getName());
             providerFound.setCode(provider.getCode());
             providerFound = providerRepo.save(providerFound);
-            Provider finalProviderFound = providerFound;
-            provider.getProviderOptions().forEach(
-                    providerOptionDTO -> {
-                        ProviderOption option = new ProviderOption();
-                        option.setProvider(finalProviderFound);
-                        option.setOption(providerOptionDTO.getOption());
-                        option.setValue(providerOptionDTO.getValue());
-                        providerOptionRepo.save(option);
-                    }
-            );
+            for(ProviderOptionDTO providerOptionDTO : provider.getProviderOptions()){
+                ProviderOption option = new ProviderOption();
+                option.setProvider(providerFound);
+                option.setCategory(providerOptionDTO.getCategory());
+                option.setValue(providerOptionDTO.getValue());
+                providerOptionRepo.save(option);
+            }
             provider.setId(providerFound.getId());
             return new ResponseDTO<>(HttpStatus.CREATED, "Provider Created", provider);
         } catch (Exception ex) {
@@ -118,14 +118,14 @@ public class ProviderService {
                     .toList();
             List<String> options = new ArrayList<>();
             providerOptions.forEach(
-                    providerOption -> options.add(providerOption.getOption())
+                    providerOption -> options.add(providerOption.getCategory())
             );
             provider.getProviderOptions().forEach(
                     providerOptionDTO -> {
-                        if (!options.contains(providerOptionDTO.getOption())) {
+                        if (!options.contains(providerOptionDTO.getCategory())) {
                             ProviderOption option = new ProviderOption();
                             option.setProvider(providerFound);
-                            option.setOption(providerOptionDTO.getOption());
+                            option.setCategory(providerOptionDTO.getCategory());
                             option.setValue(providerOptionDTO.getValue());
                             providerOptionRepo.save(option);
                         }

@@ -10,6 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ProviderOptionDTO {
-    private String option;
+    private String category;
     private String value;
 }
