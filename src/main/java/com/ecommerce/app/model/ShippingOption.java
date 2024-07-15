@@ -19,8 +19,9 @@ public class ShippingOption {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Column(unique = true)
+    private String code;
     private Double amount;
-    private Boolean isReturn;
     @ManyToOne
     @JoinColumn(name = "provider_id")
     private Provider provider;
