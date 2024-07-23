@@ -12,10 +12,12 @@ CREATE TABLE IF NOT EXISTS orders (
     order_date TIMESTAMP NOT NULL,
     user_id BIGINT NOT NULL,
     shipping_id BIGINT NOT NULL,
-    discount_id BIGINT NOT NULL,
+    discount_id BIGINT,
+    address_id BIGINT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (shipping_id) REFERENCES shipping(id),
+    FOREIGN KEY (address_id) REFERENCES address(id),
     FOREIGN KEY (discount_id) REFERENCES discount(id)
 );
 

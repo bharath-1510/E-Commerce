@@ -34,12 +34,13 @@ public class User implements UserDetails {
     private String firstName;
     private String lastName;
     private LocalDateTime createdAt;
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Address> addresses;
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-    private List<Order> orders=new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Order> orders = new ArrayList<>();
 
     private LocalDateTime updatedAt;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
