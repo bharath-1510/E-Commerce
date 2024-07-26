@@ -7,7 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface ProductVariantsRepo extends JpaRepository<ProductVariant,Long> {
+public interface ProductVariantsRepo extends JpaRepository<ProductVariant, Long> {
     List<ProductVariant> findAllByProduct(Product product);
-    Optional<ProductVariant> findById(Long id);
+
+    Optional<ProductVariant> findByCode(String code);
 }

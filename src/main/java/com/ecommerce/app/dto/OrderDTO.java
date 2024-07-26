@@ -14,5 +14,5 @@ public class OrderDTO {
     private AddressDTO address;
     private String discountCode;
     private String shippingCode;
-    private List<OrderDTO> orderItems;
+    private List<OrderItemDTO> orderItems;
 }
